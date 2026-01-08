@@ -51,3 +51,17 @@ export interface ScriptMetadata {
   content: string;
   status: 'IDLE' | 'RUNNING' | 'SUCCESS' | 'ERROR';
 }
+
+export interface NewsItem {
+  title: string;
+  url: string;
+  snippet: string;
+}
+
+export interface SatelliteIntercept {
+  id: string;
+  lat: number;
+  lng: number;
+  target: string;
+  intensity: number;
+}

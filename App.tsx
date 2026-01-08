@@ -6,10 +6,14 @@ import { AICommandCenter } from './components/AICommandCenter';
 import { MetricChart } from './components/MetricChart';
 import { QuantumEncryptionDiagnostics } from './components/QuantumEncryptionDiagnostics';
 import { NetworkWaveform } from './components/NetworkWaveform';
+import { VoiceLink } from './components/VoiceLink';
+import { NewsGrounding } from './components/NewsGrounding';
+import { SatelliteUplink } from './components/SatelliteUplink';
 import { Icons } from './constants';
 import { SystemMetrics } from './types';
 
 const App: React.FC = () => {
+  const [isLocked, setIsLocked] = useState(true);
   const [metrics, setMetrics] = useState<any[]>([]);
   const [currentMetrics, setCurrentMetrics] = useState<SystemMetrics>({
     cpu: 45,
@@ -19,6 +23,7 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
+    if (isLocked) return;
     const interval = setInterval(() => {
       const time = new Date().toLocaleTimeString();
       const newValue = Math.floor(Math.random() * 40) + 30;
@@ -33,10 +38,44 @@ const App: React.FC = () => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isLocked]);
+
+  if (isLocked) {
+    return (
+      <div className="h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="cyber-grid absolute inset-0 opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none" />
+        
+        <div className="glass-panel p-12 rounded-3xl border-cyan-500/30 flex flex-col items-center gap-8 shadow-[0_0_100px_rgba(34,211,238,0.1)] relative z-10 max-w-md w-full animate-in fade-in zoom-in duration-700">
+           <div className="w-24 h-24 border-2 border-cyan-500/20 rounded-full flex items-center justify-center relative">
+             <div className="absolute inset-0 border-t-2 border-cyan-400 rounded-full animate-spin" />
+             <Icons.Shield />
+           </div>
+           
+           <div className="text-center">
+             <h1 className="font-orbitron font-black text-4xl text-cyan-50 tracking-tighter mb-2">OS_QUANTUM</h1>
+             <p className="text-[10px] text-cyan-500/60 tracking-[0.8em] uppercase font-bold">Security_Interface</p>
+           </div>
+
+           <button 
+             onClick={() => setIsLocked(false)}
+             className="group relative px-12 py-4 border border-cyan-500/30 rounded-xl overflow-hidden transition-all hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+           >
+              <div className="absolute inset-0 bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors" />
+              <span className="relative z-10 font-orbitron text-xs font-black text-cyan-100 tracking-[0.4em] uppercase">Initialize_Session</span>
+           </button>
+
+           <div className="text-[9px] font-mono text-slate-600 uppercase tracking-widest text-center">
+             Biometric Link Required<br/>
+             Authorized Personnel Only
+           </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="h-screen flex flex-col p-4 gap-4 overflow-hidden relative">
+    <div className="h-screen flex flex-col p-4 gap-4 overflow-hidden relative animate-in fade-in duration-1000">
       {/* Decorative corners */}
       <div className="absolute top-2 left-2 w-16 h-16 border-t-2 border-l-2 border-cyan-500/40 pointer-events-none rounded-tl-xl z-50" />
       <div className="absolute top-2 right-2 w-16 h-16 border-t-2 border-r-2 border-cyan-500/40 pointer-events-none rounded-tr-xl z-50" />
@@ -87,6 +126,8 @@ const App: React.FC = () => {
         
         {/* Left Column: Telemetry & Monitoring */}
         <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 min-h-0">
+          <VoiceLink />
+          
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-slate-900/40 border border-cyan-500/10 p-4 rounded-xl backdrop-blur-md group hover:border-cyan-500/30 transition-all">
               <div className="text-[9px] text-slate-500 mb-1 tracking-widest uppercase">CPU_CORE_LOAD</div>
@@ -105,7 +146,6 @@ const App: React.FC = () => {
           </div>
           
           <NetworkWaveform />
-          <MetricChart title="Packet Analysis (p/s)" data={metrics} color="#22d3ee" />
           
           <div className="flex-1 min-h-0">
             <CyberTerminal />
@@ -114,7 +154,10 @@ const App: React.FC = () => {
 
         {/* Center Column: Global Topology & Diagnostics */}
         <div className="col-span-12 lg:col-span-6 flex flex-col gap-4 min-h-0 overflow-y-auto pr-1 custom-scrollbar">
-          <ThreatMap />
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 h-[350px]">
+            <ThreatMap />
+            <SatelliteUplink />
+          </div>
           
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             <div className="bg-slate-900/40 border border-indigo-500/20 rounded-xl p-5 relative overflow-hidden group min-h-[380px] backdrop-blur-md shadow-lg">
@@ -130,13 +173,12 @@ const App: React.FC = () => {
                     <div className="w-1.5 h-1.5 bg-cyan-500/20 rounded-full" />
                   </div>
                 </div>
-                <div className="grid grid-cols-6 gap-2 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                  {Array.from({ length: 48 }).map((_, i) => (
+                <div className="grid grid-cols-8 gap-2 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                  {Array.from({ length: 64 }).map((_, i) => (
                     <div key={i} className={`aspect-square rounded-md border flex flex-col items-center justify-center gap-1 transition-all duration-500 ${
                       Math.random() > 0.94 ? 'bg-rose-500/15 border-rose-500/40 shadow-[0_0_12px_rgba(244,63,94,0.1)]' : 'bg-slate-800/30 border-slate-700/50 hover:border-cyan-500/30'
                     }`}>
-                      <div className="text-[6px] opacity-40 font-mono">{i.toString(16).padStart(2, '0').toUpperCase()}</div>
-                      <div className={`w-1.5 h-1.5 rounded-full ${Math.random() > 0.1 ? 'bg-cyan-400 shadow-[0_0_5px_#22d3ee] animate-pulse' : 'bg-slate-700'}`} />
+                      <div className={`w-1 h-1 rounded-full ${Math.random() > 0.1 ? 'bg-cyan-400 animate-pulse' : 'bg-slate-700'}`} />
                     </div>
                   ))}
                 </div>
@@ -157,9 +199,14 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: AI Core */}
-        <div className="col-span-12 lg:col-span-3 min-h-0">
-          <AICommandCenter metrics={currentMetrics} />
+        {/* Right Column: AI Core & Grounding */}
+        <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 min-h-0">
+          <div className="flex-1 min-h-0">
+             <AICommandCenter metrics={currentMetrics} />
+          </div>
+          <div className="h-1/3 min-h-[200px]">
+             <NewsGrounding />
+          </div>
         </div>
       </main>
 
@@ -174,9 +221,9 @@ const App: React.FC = () => {
              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_5px_#6366f1]" />
              UPTIME: 1,422:12:44
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-rose-500 font-bold">
              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_5px_#f43f5e]" />
-             ERRORS: 0.00%
+             THREATS_DETECTED: 0
           </div>
         </div>
         <div className="flex gap-6 items-center">

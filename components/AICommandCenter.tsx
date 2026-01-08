@@ -50,7 +50,8 @@ export const AICommandCenter: React.FC<AICommandCenterProps> = ({ metrics }) => 
     setIsTyping(true);
 
     const response = await getGeminiResponse(command, mode);
-    setMessages(prev => [...prev, { role: 'model', text: response }]);
+    // Fixed: Accessed response.text to match the ChatMessage type which expects a string.
+    setMessages(prev => [...prev, { role: 'model', text: response.text }]);
     setIsTyping(false);
   };
 

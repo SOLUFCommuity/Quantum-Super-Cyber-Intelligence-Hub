@@ -1,0 +1,8 @@
+{
+  "name": "Quantum-Super Cyber Intelligence Hub",
+  "description": "A high-end, futuristic cybersecurity command center featuring real-time threat monitoring, quantum-encryption diagnostics, and a Gemini-powered cyber-defense AI assistant.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

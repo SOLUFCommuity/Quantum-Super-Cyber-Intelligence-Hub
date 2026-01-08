@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum-Super Cyber Intelligence Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #020617; /* slate-950 */
+            color: #22d3ee; /* cyan-400 */
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            selection-background: rgba(34, 211, 238, 0.3);
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        /* Scanline effect */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 100;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(34, 211, 238, 0.03) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
+        }
+
+        @keyframes cyber-flash {
+            0%, 100% { border-color: rgba(244, 63, 94, 0.3); box-shadow: 0 0 5px rgba(244, 63, 94, 0.1); background-color: rgba(15, 23, 42, 0.6); }
+            50% { border-color: rgba(244, 63, 94, 1); box-shadow: 0 0 20px rgba(244, 63, 94, 0.4); background-color: rgba(244, 63, 94, 0.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-0.5px, -0.5px); }
+            20%, 40%, 60%, 80% { transform: translate(0.5px, 0.5px); }
+        }
+
+        @keyframes noise-anim {
+            0% { transform: translate(0,0) }
+            10% { transform: translate(-1%,-1%) }
+            20% { transform: translate(-2%,1%) }
+            30% { transform: translate(1%,-2%) }
+            40% { transform: translate(-1%,1%) }
+            50% { transform: translate(-2%,-2%) }
+            60% { transform: translate(-1%,2%) }
+            70% { transform: translate(2%,1%) }
+            80% { transform: translate(1%,-1%) }
+            90% { transform: translate(-1%,1%) }
+            100% { transform: translate(1%,-2%) }
+        }
+
+        .animate-cyber-flash {
+            animation: cyber-flash 1.2s infinite;
+        }
+
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(34, 211, 238, 0.4);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 211, 238, 0.8);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(34, 211, 238, 0.15);
+        }
+
+        .glow-cyan {
+            text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+        }
+
+        /* Subtle noise texture */
+        .noise-overlay {
+            position: fixed;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+            animation: noise-anim 0.2s infinite;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "d3": "https://esm.sh/d3@^7.9.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="cyber-grid">
+    <div class="noise-overlay"></div>
+    <div id="root"></div>
+    <div class="scanline"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

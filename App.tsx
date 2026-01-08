@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { CyberTerminal } from './components/CyberTerminal';
 import { ThreatMap } from './components/ThreatMap';
 import { AICommandCenter } from './components/AICommandCenter';
@@ -235,6 +236,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 };
